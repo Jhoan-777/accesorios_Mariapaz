@@ -824,3 +824,22 @@ img {
     margin: 15px 0;
     color: #777;
 }
+/* FUNCIONAMIENTO DEL MENU */
+
+@media (max-width: 768px) {
+
+    .main-nav {
+        display: none;
+        flex-direction: column;
+    }
+
+    .main-nav.open {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+    }
+
+}
