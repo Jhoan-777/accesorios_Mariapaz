@@ -102,4 +102,62 @@ if (contactForm) {
 
     });
 
+} 
+const searchInput = document.getElementById("productSearch");
+const filterButtons = document.querySelectorAll(".filter-btn");
+const products = document.querySelectorAll(".product-card");
+const resultsMessage = document.getElementById("resultsMessage");
+
+let selectedCategory = "todos";
+
+function filterProducts() {
+
+    const searchText = searchInput.value.toLowerCase();
+
+    let visibleProducts = 0;
+
+    products.forEach(product => {
+
+        const name = product.dataset.name.toLowerCase();
+        const category = product.dataset.category;
+
+        const matchesName = name.includes(searchText);
+
+        const matchesCategory =
+            selectedCategory === "todos" ||
+            category === selectedCategory;
+
+        if (matchesName && matchesCategory) {
+            product.style.display = "";
+            visibleProducts++;
+        } else {
+            product.style.display = "none";
+        }
+
+    });
+
+    resultsMessage.textContent =
+        visibleProducts === 0
+        ? "No encontramos productos con esa búsqueda."
+        : "Productos encontrados: " + visibleProducts;
 }
+
+searchInput.addEventListener("input", filterProducts);
+
+filterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        filterButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        selectedCategory = button.dataset.category;
+
+        filterProducts();
+
+    });
+
+});
