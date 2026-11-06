@@ -777,3 +777,50 @@ img {
         gap: 17px;
     }
 }
+/* BUSCADOR Y FILTROS */
+
+.catalog-tools {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.catalog-tools label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.catalog-tools input {
+    width: 100%;
+    max-width: 450px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.category-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.filter-btn {
+    padding: 10px 18px;
+    border: 1px solid #b88b65;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background: #b88b65;
+    color: white;
+}
+
+#resultsMessage {
+    margin: 15px 0;
+    color: #777;
+}
