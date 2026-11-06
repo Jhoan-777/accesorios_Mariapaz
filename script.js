@@ -1,9 +1,9 @@
+
 // ==================================
 // MENÚ RESPONSIVE
 // ==================================
 
 const menuButton = document.querySelector(".menu-toggle");
-
 const navigation = document.querySelector(".main-nav");
 
 if (menuButton && navigation) {
@@ -12,10 +12,7 @@ if (menuButton && navigation) {
 
         const isOpen = navigation.classList.toggle("open");
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            String(isOpen)
-        );
+        menuButton.setAttribute("aria-expanded", String(isOpen));
 
         menuButton.setAttribute(
             "aria-label",
@@ -24,18 +21,12 @@ if (menuButton && navigation) {
 
     });
 
-    // Cerrar menú al seleccionar una página
-
-    navigation.querySelectorAll("a").forEach((link) => {
+    navigation.querySelectorAll("a").forEach(link => {
 
         link.addEventListener("click", () => {
 
             navigation.classList.remove("open");
-
-            menuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+            menuButton.setAttribute("aria-expanded", "false");
 
         });
 
@@ -48,10 +39,8 @@ if (menuButton && navigation) {
 // AÑO AUTOMÁTICO
 // ==================================
 
-document.querySelectorAll(".year").forEach((element) => {
-
+document.querySelectorAll(".year").forEach(element => {
     element.textContent = new Date().getFullYear();
-
 });
 
 
@@ -63,101 +52,107 @@ const contactForm = document.querySelector("#contactForm");
 
 if (contactForm) {
 
-    contactForm.addEventListener("submit", (event) => {
+    contactForm.addEventListener("submit", event => {
 
         event.preventDefault();
 
-        // Obtener los datos del formulario
-
-        const name = document
-            .querySelector("#name")
-            .value
-            .trim();
-
-        const message = document
-            .querySelector("#message")
-            .value
-            .trim();
-
-        // Número de WhatsApp con indicativo de Colombia
+        const name = document.querySelector("#name").value.trim();
+        const message = document.querySelector("#message").value.trim();
 
         const phone = "573024208879";
 
-        // Crear mensaje
-
         const text = `Hola, soy ${name}. ${message}`;
-
-        // Crear enlace de WhatsApp
 
         const whatsappUrl =
             `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 
-        // Abrir WhatsApp
-
-        window.open(
-            whatsappUrl,
-            "_blank",
-            "noopener,noreferrer"
-        );
+        window.open(whatsappUrl, "_blank");
 
     });
 
-} 
+}
+
+
+// ==================================
+// BUSCADOR Y FILTROS DE PRODUCTOS
+// ==================================
+
 const searchInput = document.getElementById("productSearch");
 const filterButtons = document.querySelectorAll(".filter-btn");
 const products = document.querySelectorAll(".product-card");
 const resultsMessage = document.getElementById("resultsMessage");
 
-let selectedCategory = "todos";
+if (searchInput && products.length > 0) {
 
-function filterProducts() {
+    let selectedCategory = "todos";
 
-    const searchText = searchInput.value.toLowerCase();
+    function filterProducts() {
 
-    let visibleProducts = 0;
+        const searchText = searchInput.value
+            .toLowerCase()
+            .trim();
 
-    products.forEach(product => {
+        let visibleProducts = 0;
 
-        const name = product.dataset.name.toLowerCase();
-        const category = product.dataset.category;
+        products.forEach(product => {
 
-        const matchesName = name.includes(searchText);
+            const productName = (
+                product.dataset.name ||
+                product.querySelector("h2")?.textContent ||
+                ""
+            ).toLowerCase();
 
-        const matchesCategory =
-            selectedCategory === "todos" ||
-            category === selectedCategory;
+            const category = product.dataset.category || "otros";
 
-        if (matchesName && matchesCategory) {
-            product.style.display = "";
-            visibleProducts++;
-        } else {
-            product.style.display = "none";
-        }
+            const matchesName = productName.includes(searchText);
 
-    });
+            const matchesCategory =
+                selectedCategory === "todos" ||
+                category === selectedCategory;
 
-    resultsMessage.textContent =
-        visibleProducts === 0
-        ? "No encontramos productos con esa búsqueda."
-        : "Productos encontrados: " + visibleProducts;
-}
+            if (matchesName && matchesCategory) {
 
-searchInput.addEventListener("input", filterProducts);
+                product.style.display = "";
+                visibleProducts++;
 
-filterButtons.forEach(button => {
+            } else {
 
-    button.addEventListener("click", () => {
+                product.style.display = "none";
 
-        filterButtons.forEach(btn => {
-            btn.classList.remove("active");
+            }
+
         });
 
-        button.classList.add("active");
+        if (resultsMessage) {
 
-        selectedCategory = button.dataset.category;
+            resultsMessage.textContent = visibleProducts === 0
+                ? "No encontramos productos con esa búsqueda."
+                : "Productos encontrados: " + visibleProducts;
 
-        filterProducts();
+        }
+
+    }
+
+    searchInput.addEventListener("input", filterProducts);
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            filterButtons.forEach(btn => {
+                btn.classList.remove("active");
+                btn.setAttribute("aria-pressed", "false");
+            });
+
+            button.classList.add("active");
+            button.setAttribute("aria-pressed", "true");
+
+            selectedCategory = button.dataset.category;
+
+            filterProducts();
+
+        });
 
     });
 
-});
+}
