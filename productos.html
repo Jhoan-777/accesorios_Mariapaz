@@ -43,7 +43,28 @@
             Conoce nuestros accesorios y encuentra tu favorito.
         </p>
     </section>
+<div class="catalog-tools section-wrap">
 
+    <label for="productSearch">Buscar accesorios</label>
+
+    <input
+        type="search"
+        id="productSearch"
+        placeholder="Escribe el nombre de un accesorio..."
+    >
+
+    <div class="category-filters">
+        <button class="filter-btn active" data-category="todos">Todos</button>
+        <button class="filter-btn" data-category="pulseras">Manillas</button>
+        <button class="filter-btn" data-category="collares">Collares</button>
+        <button class="filter-btn" data-category="anillos">Anillos</button>
+        <button class="filter-btn" data-category="gafas">Gafas</button>
+        <button class="filter-btn" data-category="otros">Otros</button>
+    </div>
+
+    <p id="resultsMessage">Mostrando todos los productos.</p>
+
+</div>
     <section class="products-grid section-wrap">
 
         <!-- PRODUCTO 1 -->
